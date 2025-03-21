@@ -1,6 +1,6 @@
 const Item = require('../models/Item');
 
-// Get all items from the database
+// Get all items from the database now 
 exports.getItems = async (req, res) => {
     try {
         const items = await Item.find();
