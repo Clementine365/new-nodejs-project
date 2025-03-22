@@ -2,9 +2,9 @@ POST http://localhost:5000/api/users
  Content-Type: application/json
 
   {
-  "name": "ange pollle",
-  "email": "angepolle@gmail.com",
-  "age": 32
+  "name": "solange pollle",
+  "email": "solangepolle@gmail.com",
+  "age": 29
   }
 
 #####
@@ -13,7 +13,7 @@ http://localhost:5000/api/users
 
 
 ########
-GET http://localhost:5000/api/users/67dd5829aa7202165ae59fa0
+GET http://localhost:5000/api/users/67de7d220512ec2b2ab4ad0a
 
 Content-Type: application/json
 
@@ -32,6 +32,6 @@ Content-Type: application/json
 
 
 #########
-DELETE http://localhost:5000/api/users/67dd5854aa7202165ae59fa2
+DELETE http://localhost:5000/api/users/67de7d220512ec2b2ab4ad0a
 Content-Type: application/json
 
