@@ -15,7 +15,7 @@ const userRoutes = require('./routes/userRoutes'); // Import the userRoutes
 app.use('/api/users', userRoutes); // Use userRoutes for "/api/users" route
 
 // Connect to MongoDB with updated connection string and options
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("MongoDB connected!");
     })
