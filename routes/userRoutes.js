@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/users'); // Assuming you have a User model
+const User = require('../models/users'); // to call a User model
 const { body, validationResult } = require('express-validator');
 
-// Route to get all users (GET)
+// this is Route to get all users (GET)
 router.get('/', async (req, res) => {
     try {
         const users = await User.find(); // Fetch all users
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Route to get a user by ID (GET)
+// this is the Route to get a user by ID (GET)
 router.get('/:id', async (req, res) => {
     const userId = req.params.id;
     try {
@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Route to create a new user (POST)
+// this is the Route to create a new user (POST)
 router.post('/', [
     body('name').notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Please provide a valid email'),
@@ -63,20 +63,34 @@ router.put('/:id', [
         return res.status(400).json({ errors: errors.array() });
     }
 
+    // Get updated values from the request body
     const { name, email, age } = req.body;
 
+    // Prepare the updated data, only include non-null fields
+    const updateData = {};
+    if (name) updateData.name = name;
+    if (email) updateData.email = email;
+    if (age) updateData.age = age;
+
     try {
-        const updatedUser = await User.findByIdAndUpdate(userId, { name, email, age }, { new: true });
+        // Find user by ID and update their details
+        const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true });
 
         if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        res.status(200).json(updatedUser);  // Successfully updated user
+        // Respond with the updated user data (excluding the password)
+        const userResponse = { ...updatedUser.toObject() };
+        delete userResponse.password; // Do not send the password back in the response
+        res.status(200).json(userResponse);  // Successfully updated user
     } catch (err) {
+        console.error(err);
         res.status(500).json({ message: 'Error updating user', error: err.message });
     }
 });
+
+module.exports = router;
 
 // Route to delete a user by ID (DELETE)
 router.delete('/:id', async (req, res) => {
