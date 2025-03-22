@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Assuming you have a User model
+const User = require('../models/users'); // Assuming you have a User model
 const { body, validationResult } = require('express-validator');
 
 // Route to get all users (GET)
