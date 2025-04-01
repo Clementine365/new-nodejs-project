@@ -1,15 +1,17 @@
-POST http://localhost:5000/api/users
+POST http://localhost:5000/api-docs/
+ 
  Content-Type: application/json
 
   {
-  "name": "solange pollle",
-  "email": "solangepolle@gmail.com",
-  "age": 29
+  "name": "clementine nanda",
+  "email": "nandacle@gmail.com",
+  "age": 45
   }
 
 #####
-http://localhost:5000/api/users
+GET http://localhost:5000/api/users
 
+Content-Type: application/json
 
 
 ########
@@ -20,14 +22,18 @@ Content-Type: application/json
 
 
 #######
-PUT http://localhost:5000/api/users/67dd5829aa7202165ae59fa0
+PUT http://localhost:5000/api/users/67dd5db9aef054c7cac4ec85
 
 Content-Type: application/json
 
 
 {
- "name": "John peter",
-    "email": "johnpeter@example.com",
+  
+    "name": "Yvan Drew",
+    "email": "yvandrew3d@example.com",
+    "age": 45,
+    "createdAt": "2025-03-21T12:38:17.197Z",
+    "__v": 0
   }
 
 
