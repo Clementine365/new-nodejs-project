@@ -1,29 +1,25 @@
-POST http://localhost:5000/api-docs/
- 
+POST http://localhost:5002/api-docs/
  Content-Type: application/json
 
   {
-  "name": "clementine nanda",
+  "name": "clemence nanda",
   "email": "nandacle@gmail.com",
-  "age": 45
+  "age": 56
   }
 
 #####
-GET http://localhost:5000/api/users
-
+GET http://localhost:5002/api/users
 Content-Type: application/json
 
 
 ########
-GET http://localhost:5000/api/users/67de7d220512ec2b2ab4ad0a
-
+GET http://localhost:5002/api/users/67de7d220512ec2b2ab4ad0a
 Content-Type: application/json
 
 
 
 #######
-PUT http://localhost:5000/api/users/67dd5db9aef054c7cac4ec85
-
+PUT http://localhost:5002/api/users/67dd5db9aef054c7cac4ec85
 Content-Type: application/json
 
 
@@ -38,6 +34,6 @@ Content-Type: application/json
 
 
 #########
-DELETE http://localhost:5000/api/users/67de7d220512ec2b2ab4ad0a
+DELETE http://localhost:5002/api/users/67de7d220512ec2b2ab4ad0a
 Content-Type: application/json
 

@@ -5,15 +5,15 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:5003",
-  "basePath": "/",
+  "host": "localhost:5002",
+  "basePath": "/api/users",
   "schemes": [
     "http"
   ],
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "description": "Get all users",
         "responses": {
           "200": {
             "description": "OK"
@@ -24,7 +24,7 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "Create a new user",
         "parameters": [
           {
             "name": "body",
@@ -60,7 +60,7 @@
     },
     "/{id}": {
       "get": {
-        "description": "",
+        "description": "Get user by ID",
         "parameters": [
           {
             "name": "id",
@@ -82,7 +82,7 @@
         }
       },
       "put": {
-        "description": "",
+        "description": "Update user by ID",
         "parameters": [
           {
             "name": "id",
@@ -113,9 +113,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "404": {
             "description": "Not Found"
           },
@@ -125,7 +122,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete user by ID",
         "parameters": [
           {
             "name": "id",

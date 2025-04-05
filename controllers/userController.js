@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs'); // For password hashing
 // Get all users
 exports.getUsers = async (req, res) => {
     try {
-        const users = await User.find({}, '-password'); // Exclude passwords from response
-        res.status(200).json(users);
+        const users = await User.find({}, '-password'); // Fetch all users, excluding the password field
+        res.status(200).json(users); // Return the list of users as JSON
     } catch (error) {
         res.status(500).json({ message: "Error fetching users", error: error.message });
     }
