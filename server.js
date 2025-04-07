@@ -13,6 +13,14 @@ const userRoutes = require("./routes/userRoutes");
 // Load environment variables
 dotenv.config();
 
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production'
+    ? 'https://new-nodejs-project.onrender.com'  // Production frontend URL (Replace with your Render URL)
+    : 'http://localhost:5003',  // Local development frontend URL (Replace with your local URL)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
+  credentials: true,  // Allow cookies and session data to be sent with requests
+};
 // Initialize Express app
 const app = express();
 app.use(cors());
@@ -135,7 +143,7 @@ app.use("/api/users", userRoutes);
 
 
 // Start server
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5003;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

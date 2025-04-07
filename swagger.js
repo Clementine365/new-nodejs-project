@@ -5,7 +5,7 @@ const doc = {
     title: "User API",
     description: "This is the documentation for the User API.",
   },
-  host: "localhost:5002", // Change this if deploying
+  host: "localhost:5003", // Change this if deploying
   schemes: ["http"], // HTTP or HTTPS depending on your setup
 };
 
