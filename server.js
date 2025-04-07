@@ -28,6 +28,8 @@ const corsOptions = {
  : 'localhost:5003';
 
 swaggerFile.host = baseUrl;
+swaggerFile.schemes = [process.env.NODE_ENV === 'production' ? 'https' : 'http'];
+
 
 // Initialize Express app
 const app = express();
