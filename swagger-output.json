@@ -5,7 +5,7 @@
     "title": "REST API",
     "description": ""
   },
-  "host": "localhost:5003",
+  "host": "new-nodejs-project.onrender.com",
   "basePath": "/api/users",
   "schemes": [
     "http"
