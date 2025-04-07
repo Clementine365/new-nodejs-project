@@ -8,7 +8,7 @@
   "host": "new-nodejs-project.onrender.com",
   "basePath": "/api-docs",
   "schemes": [
-    ""
+    "https"
   ],
   "paths": {
     "/": {

@@ -22,11 +22,12 @@ const corsOptions = {
   credentials: true,  // Allow cookies and session data to be sent with requests
 };
 
-const baseUrl = process.env.NODE_ENV === 'production' 
-  ? 'https://new-nodejs-project.onrender.com' 
-  : 'http://localhost:5003';
+ // Modify the host dynamically based on the environment
+ const baseUrl = process.env.NODE_ENV === 'production' 
+ ? 'new-nodejs-project.onrender.com'  // Removed https://
+ : 'localhost:5003';
 
-swaggerFile.host = baseUrl; // Modify the host dynamically based on the environment
+swaggerFile.host = baseUrl;
 
 // Initialize Express app
 const app = express();
