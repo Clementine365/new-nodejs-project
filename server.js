@@ -113,7 +113,8 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Routes
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger-output.json")));
+
 app.get("/login", (req, res) => res.render("login"));
 
 app.get("/login/github", passport.authenticate("github", { scope: ["user:email"] }));
