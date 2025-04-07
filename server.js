@@ -21,6 +21,13 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
   credentials: true,  // Allow cookies and session data to be sent with requests
 };
+
+const baseUrl = process.env.NODE_ENV === 'production' 
+  ? 'https://new-nodejs-project.onrender.com' 
+  : 'http://localhost:5003';
+
+swaggerFile.host = baseUrl; // Modify the host dynamically based on the environment
+
 // Initialize Express app
 const app = express();
 app.use(cors());
