@@ -38,12 +38,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// GitHub Strategy
 passport.use(new GithubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: process.env.CALLBACK_URL,
-  scope: ["user:email"]
+  // Dynamically set the callbackURL based on the environment (production or development)
+  callbackURL: process.env.NODE_ENV === 'production' 
+    ? 'https://new-nodejs-project.onrender.com/github/callback' // Render production URL
+    : 'http://localhost:5002/github/callback', // Local development URL
+  scope: ["user:email"] // Scope to access user email
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     console.log("🔍 GitHub Profile:", JSON.stringify(profile, null, 2));
@@ -54,28 +56,33 @@ passport.use(new GithubStrategy({
 
     let email = null;
 
+    // Get the first email from the profile if available
     if (profile.emails && profile.emails.length > 0) {
       email = profile.emails[0].value;
     }
 
+    // If no email found, use the GitHub username as a fallback email
     if (!email && profile.username) {
       email = `${profile.username}@github.local`;
     }
 
+    // If no GitHub ID or email, return an error
     if (!githubId || !email) {
       return done(new Error("Missing GitHub ID or email"), null);
     }
 
+    // Check if the user already exists in the database
     let user = await User.findOne({ githubId });
 
     if (!user) {
+      // If the user doesn't exist, create a new one
       user = await User.create({ githubId, name, email, age: 18 });
     }
 
-    return done(null, user);
+    return done(null, user); // Proceed with the user object
   } catch (err) {
     console.error("❌ GitHub Strategy Error:", err);
-    return done(err, null);
+    return done(err, null); // Handle error if something goes wrong
   }
 }));
 
