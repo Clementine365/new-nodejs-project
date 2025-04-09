@@ -1,18 +1,42 @@
-const swaggerAutogen = require("swagger-autogen");
+const swaggerAutogen = require("swagger-autogen")();
+
+require("dotenv").config(); // Load .env here
 
 const doc = {
   info: {
     title: "User API",
     description: "This is the documentation for the User API.",
   },
-  // Ensure that 'host' doesn't include the protocol
   host: process.env.NODE_ENV === 'production'
-    ? "new-nodejs-project.onrender.com" // Production URL (without https://)
-    : "localhost:5003", // Local development URL
-  schemes: [process.env.NODE_ENV === 'production' ? "https" : "http"], // Correct protocol handling
+    ? "new-nodejs-project.onrender.com"
+    : "localhost:5003",
+  schemes: [process.env.NODE_ENV === 'production' ? "https" : "http"],
+  tags: [
+    {
+      name: "Users",
+      description: "Operations related to users"
+    }
+  ],
+  components: {
+    securitySchemes: {
+      cookieAuth: {
+        type: "apiKey",
+        in: "cookie",
+        name: "connect.sid" // Session cookie used by express-session
+      }
+    }
+  },
+  security: [
+    {
+      cookieAuth: []
+    }
+  ]
 };
 
-const outputFile = "./swagger-output.json"; // The output Swagger file
-const endpointsFiles = ["./routes/userRoutes.js"]; // Your route files
+const outputFile = "./swagger-output.json";
+const endpointsFiles = [
+  "./index.js",
+  "./routes/userRoutes.js"
+];
 
-swaggerAutogen()(outputFile, endpointsFiles); // Generate the Swagger documentation
+swaggerAutogen(outputFile, endpointsFiles, doc);

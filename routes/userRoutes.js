@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/users");
 const { body, validationResult } = require("express-validator");
-const { isAuthenticated } = require("../middleware/authenticate");  // Correct import
+const { isAuthenticated } = require("../middleware/authenticate");
 
 /**
  * @swagger
@@ -11,7 +11,18 @@ const { isAuthenticated } = require("../middleware/authenticate");  // Correct i
  *   description: API endpoints for managing users
  */
 
-// GET all users
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: List of users
+ */
 router.get("/", isAuthenticated, async (req, res) => {
   try {
     const users = await User.find();
@@ -21,7 +32,27 @@ router.get("/", isAuthenticated, async (req, res) => {
   }
 });
 
-// GET user by ID
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User found
+ *       404:
+ *         description: User not found
+ */
 router.get("/:id", isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -32,19 +63,37 @@ router.get("/:id", isAuthenticated, async (req, res) => {
   }
 });
 
-// CREATE user
-// GET user by ID
-router.get("/:id", isAuthenticated, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching user", error: err.message });
-  }
-});
-
-// CREATE user
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - age
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               age:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: User created
+ *       400:
+ *         description: Validation error or email exists
+ */
 router.post(
   "/",
   isAuthenticated,
@@ -61,7 +110,6 @@ router.post(
 
     try {
       const { name, email, age } = req.body;
-      // Check if the email already exists in the database
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ message: "Email already in use" });
@@ -76,7 +124,41 @@ router.post(
   }
 );
 
-// UPDATE user
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Update a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               age:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: User updated
+ *       400:
+ *         description: No data to update
+ *       404:
+ *         description: User not found
+ */
 router.put("/:id", isAuthenticated, async (req, res) => {
   const { name, email, age } = req.body;
   const updates = {};
@@ -85,7 +167,6 @@ router.put("/:id", isAuthenticated, async (req, res) => {
   if (email) updates.email = email;
   if (age) updates.age = age;
 
-  // If no update fields are provided, return a bad request
   if (Object.keys(updates).length === 0) {
     return res.status(400).json({ message: "No data to update" });
   }
@@ -99,7 +180,26 @@ router.put("/:id", isAuthenticated, async (req, res) => {
   }
 });
 
-// DELETE user
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Delete a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User deleted
+ *       404:
+ *         description: User not found
+ */
 router.delete("/:id", isAuthenticated, async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
