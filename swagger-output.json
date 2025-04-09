@@ -6,7 +6,7 @@
     "description": ""
   },
   "host": "new-nodejs-project.onrender.com",
-  "basePath": "/",               <-- ✅ FIXED
+  "basePath": "/",
   "schemes": [
     "https"
   ],
