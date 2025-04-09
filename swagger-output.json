@@ -19,9 +19,11 @@
           "401": { "description": "Unauthorized" },
           "500": { "description": "Internal Server Error" }
         }
-      },
+      }
+    },
+    "/api/users": {
       "post": {
-        "description": "",
+        "description": "Create a new user",
         "parameters": [
           {
             "name": "body",
@@ -44,9 +46,9 @@
         }
       }
     },
-    "/{id}": {
+    "/api/users/{id}": {
       "get": {
-        "description": "",
+        "description": "Get a user by ID",
         "parameters": [
           {
             "name": "id",
@@ -63,7 +65,7 @@
         }
       },
       "put": {
-        "description": "",
+        "description": "Update a user by ID",
         "parameters": [
           {
             "name": "id",
@@ -93,7 +95,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a user by ID",
         "parameters": [
           {
             "name": "id",
